@@ -18,18 +18,9 @@ def get_filters():
         (str) day - name of the day of week to filter by, or "all" to apply no day filter
     """
     print('\nHello! Let\'s explore some US bikeshare data!')
-    # get user input for city (chicago, new york city, washington). HINT: Use a while loop to handle invalid inputs
-    
-    validity = False 
 
-    while True: 
-        # won't need try / catch because we're dealing with strings anyways 
-        # (and converting the prompt to strings anyway)
-        # try:
-        #     city = str(input("Type in city name: ").strip().lower())
-        # except ValueError:
-        #     print("Sorry, I'm looking for a string type")
-        
+    while True:
+
         city = str(input("\nPick a city (chicago, new york city, washington): ").strip().lower())
 
         if city not in ("chicago", "new york city", "washington"):
@@ -67,16 +58,16 @@ def get_filters():
     print('-'*40)
     return city, month, day
 
-def validity_check(): 
-    
-    while True: 
+def validity_check():
+
+    while True:
         validity = str(input("Is your input correct? Type 'y' to continue and 'n' to restart: \n").strip().lower())
         if validity not in ("y", "n"):
             print("\nInvalid Response. Please try again")
             continue
         elif validity == 'y':
             break
-        else: 
+        else:
             get_filters()
 
 
@@ -102,28 +93,22 @@ def load_data(city, month, day):
     df['Hour'] = df['Start Time'].dt.hour
 
     # filter by month if applicable
-    # thus if user inputted actual month
     if month != 'all':
-       # use the index of the months list to get the corresponding int --> must be in chronological order!! 
+       # use the index of the months list to get the corresponding int --> must be in chronological order!!
         months = ['january', 'february', 'march', 'april', 'may', 'june']
-        
+
         # month outputted as integer
         month = months.index(month) + 1
 
         # month column is in type(integer)
         df = df[df['Month'] == month]
 
-
     # filter by day of week if applicable
-    # thus if user inputted actual day
     if day != 'all':
-        # list of days must be in chronological order!! 
-        days = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday']
-        # day = days.index(day) + 1
-        
+        days = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday'
         # filter by day of week to create the new dataframe
         df = df[df['Day_of_Week'] == day.title()]
-        
+
 
     return df
 
@@ -134,7 +119,7 @@ def time_stats(df):
     print('\nCalculating The Most Frequent Times of Travel...\n')
     start_time = time.time()
 
-    # look_up dictionary 
+    # look_up dictionary
     look_up = {'1': 'January', '2': 'February', '3': 'March', '4': 'April', '5': 'May',
         '6': 'June', '7': 'July', '8': 'August', '9': 'September', '10': 'October', '11': 'November', '12': 'December'}
 
@@ -172,11 +157,11 @@ def station_stats(df):
 
     end_station = df['End Station'].mode()[0]
     print("2. Most commonly used end station was: '{}'".format(end_station))
-    
+
     # display most frequent combination of start station and end station trip
 
     pair_final = df.groupby(['Start Station', 'End Station']).size().sort_values(ascending=False).reset_index(name="counts")
-    
+
     frequent_start_pair = pair_final['Start Station'][0]
     frequent_end_pair = pair_final['End Station'][0]
 
@@ -221,7 +206,7 @@ def user_stats(df):
     print(user_type_count)
 
     # Display counts of gender
-    if "Gender" in df.columns: 
+    if "Gender" in df.columns:
         gender_count = df["Gender"].value_counts()
 
         # to count null values
@@ -246,26 +231,26 @@ def user_stats(df):
         print("\nThis took %s seconds." % (time.time() - start_time))
         print('-'*40)
 
-  
+
 # Modified Version of the code in following url reference:
 # Reference: https://knowledge.udacity.com/questions/26261
 
 
-def raw_data(df): 
-    
-    # initial input! 
-    display_raw_input = input("\nWould you like to see individual raw data? Enter 'yes' or 'no'\n").strip().lower()    
+def raw_data(df):
+
+    # initial input!
+    display_raw_input = input("\nWould you like to see individual raw data? Enter 'yes' or 'no'\n").strip().lower()
     if display_raw_input in ("yes", "y"):
         i = 0
-        
-        # use while loop for the inputs that you want repeated! 
+
+        # use while loop for the inputs that you want repeated!
         # thus should start here, not at the beginning of the code
 
-        while True: 
-            # check if i is out of bounds, if upper limit is out of bounds, 
-            # then print from lower limit to length of dataframe rows                     
+        while True:
+            # check if i is out of bounds, if upper limit is out of bounds,
+            # then print from lower limit to length of dataframe rows
             if (i + 5 > len(df.index) - 1):
-                # remember that the slicing is lower bound inclusive and upper bound exclusive!! 
+                # remember that the slicing is lower bound inclusive and upper bound exclusive!!
                 # thus upper bound should be (len(df.index) --> won't print out that upper bound bc its exclusive)
                 print(df.iloc[i:len(df.index), :])
                 print("You've reached the end of the rows")
@@ -274,9 +259,9 @@ def raw_data(df):
             # if i is not out of bounds, then just print the dataframe normally
             print(df.iloc[i:i+5, :])
             i += 5
-            
-            # program temporarily halts at the input! 
-            # thus while loop does not get executed 100000 times (exaggerated) a second lol 
+
+            # program temporarily halts at the input!
+            # thus while loop does not get executed 100000 times (exaggerated) a second lol
             show_next_five_input = input("\nWould you like to see the next 5 rows? Enter 'yes' or 'no'\n").strip().lower()
             if show_next_five_input not in ("yes", "y"):
                 break # break out of while loop above
