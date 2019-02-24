@@ -209,8 +209,6 @@ def user_stats(df):
     if "Gender" in df.columns:
         gender_count = df["Gender"].value_counts()
 
-        # to count null values
-        # Reference: https://stackoverflow.com/questions/26266362/how-to-count-the-nan-values-in-a-column-in-pandas-dataframe
         nan_values = df["Gender"].isna().sum()
 
         print("\nCounts by Gender: \n{}\n \n*Note: there were '{}' NaN values for 'Gender' column".format(gender_count,nan_values))
@@ -230,11 +228,6 @@ def user_stats(df):
 
         print("\nThis took %s seconds." % (time.time() - start_time))
         print('-'*40)
-
-
-# Modified Version of the code in following url reference:
-# Reference: https://knowledge.udacity.com/questions/26261
-
 
 def raw_data(df):
 
