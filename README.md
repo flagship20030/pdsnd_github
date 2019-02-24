@@ -1,3 +1,5 @@
+Creator Name: Jun Ho Lee
+
 ### Date created: Feb 24th
 Include the date you created this project and README file.
 Date created: Feb. 24th
