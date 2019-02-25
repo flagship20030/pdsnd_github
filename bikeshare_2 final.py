@@ -1,3 +1,6 @@
+# Date Modified: 2/24/19
+# By JHL
+
 from datetime import timedelta
 import time
 import pandas as pd
@@ -278,3 +281,7 @@ def main():
 
 if __name__ == "__main__":
 	main()
+
+# References:
+# 1. https://stackoverflow.com/questions/26266362/how-to-count-the-nan-values-in-a-column-in-pandas-dataframe
+# 2. https://knowledge.udacity.com/questions/26261
